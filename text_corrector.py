@@ -4,7 +4,7 @@ from similarity_checker import SimilarityChecker
 
 class TextCorrector:
     def __init__(self):
-        self.summarizer = pipeline('summarization')
+        self.summarizer = pipeline(model='sshleifer/distilbart-cnn-12-6')
         self.happy_tt = HappyTextToText("T5", "prithivida/grammar_error_correcter_v1")
         self.sim_checker = SimilarityChecker()
 
