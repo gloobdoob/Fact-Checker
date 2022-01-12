@@ -22,15 +22,15 @@ def main():
     corrected = c.correct(text)
     article = c.decide_text(text, corrected)
 
-    g = GoogleScraper()
-    s = SimilarityChecker()
+    gs = GoogleScraper()
+    sc = SimilarityChecker()
 
     if len(text) > 5:
         summarized = c.summarize(article)
-        s_result = g.get_results(summarized)
+        s_result = gs.get_results(summarized)
         search_titles = [title[0] for title in s_result]
         search_links = [title[1] for title in s_result]
-        sim_rating = s.check_similarity(summarized, search_titles, links=search_links)
+        sim_rating = sc.check_similarity(summarized, search_titles, links=search_links)
         print(sim_rating)
 
     else:
