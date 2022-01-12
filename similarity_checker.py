@@ -2,6 +2,10 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
+pd.set_option('display.width', 400)
+pd.set_option("display.max_columns", 10)
+
+
 class SimilarityChecker:
     def __init__(self):
         self.comp_model = SentenceTransformer('bert-base-nli-mean-tokens')

@@ -34,10 +34,10 @@ def main():
         print(sim_rating)
 
     else:
-        s_result = g.get_results(article)
+        s_result = gs.get_results(article)
         search_titles = [title[0] for title in s_result]
         search_links = [title[1] for title in s_result]
-        sim_rating = s.check_similarity(article, search_titles, links=search_links)
+        sim_rating = sc.check_similarity(article, search_titles, links=search_links)
         print(sim_rating)
 
 if __name__ == "__main__":
