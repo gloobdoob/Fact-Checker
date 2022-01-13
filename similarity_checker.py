@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
-pd.set_option('display.width', 400)
+pd.set_option('display.max_colwidth', None)
 pd.set_option("display.max_columns", 10)
 
 
