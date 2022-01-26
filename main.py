@@ -37,7 +37,7 @@ def check(text, c, gs, sc):
         return sim_rating_title, sim_rating_body, search_links
 
     else:
-        raise SearchResultException()
+        raise Exception('Image did not yield any results on google, try a picture with better quality and clearer text')
 
 def main(img):
 
@@ -69,33 +69,38 @@ if __name__ == "__main__":
     logging.disable(logging.CRITICAL)
     # path for image, this is where you add your image
     # for the dropbox thing
-    img_path = 'news dataset/real/FB_IMG_1642077414361.jpg'
+    img_path = 'news dataset/real/FB_IMG_1642768765614.jpg'
 
     # u can erase these two lines
     # ------------
     # imgs = os.listdir(path)
     # img = os.path.join(path, imgs[6])
     # -------------
+    try:
+        prediction, sites, urls = main(img_path)
 
-    prediction, sites, urls = main(img_path)
-    if prediction == 'Real':
-        print('We predict that this is', prediction)
-        print('These are the articles from credible sites that we ran across when searching for this image: ')
-        for site in sites:
-            print(site)
-    elif prediction == 'Risky' and sites:
-        print('We predict that this is', prediction + '.', 'Please do more research regarding this topic')
-        print('These are the articles from credible sites that we ran across when searching for this image: ')
-        for site in sites:
-            print(site)
-    elif prediction == 'Risky' and not sites:
-        print('We predict that this is a', prediction + ' article.', 'Please do more research regarding this topic')
-        print('There were no credible websites that appeared while searching for this image')
-        print('These are the risky websites that came up when searching: ')
-        for url in urls:
-            print(url)
+        if prediction == 'Real':
+            print('We predict that this is', prediction)
+            print('These are the articles from credible sites that we ran across when searching for this image: ')
+            for site in sites:
+                print(site)
+        elif prediction == 'Risky' and sites:
+            print('We predict that this is', prediction + '.', 'Please do more research regarding this topic')
+            print('These are the articles from credible sites that we ran across when searching for this image: ')
+            for site in sites:
+                print(site)
+        elif prediction == 'Risky' and not sites:
+            print('We predict that this is a', prediction + ' article.', 'Please do more research regarding this topic')
+            print('There were no credible websites that appeared while searching for this image')
+            print('These are the risky websites that came up when searching: ')
+            for url in urls:
+                print(url)
 
-    print('Please note that this is not perfect, the text corrector/summarizer may get words wrong and these terms will get searched, returning inaccurate results.')
+        print(
+            'Please note that this is not perfect, the text corrector/summarizer may get words wrong and these terms will get searched, returning inaccurate results.')
+    except Exception as e:
+        print(e)
+
 
 
 
