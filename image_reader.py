@@ -11,6 +11,7 @@ class ImageReader:
 
         self.reader = easyocr.Reader(['en', 'tl'], recog_network='english_g2', gpu=True)
 
+    # Extracts text from the image using a library called easyocr
     def read_img(self, path):
         result = self.reader.readtext(path, detail = 1, paragraph=True)
 

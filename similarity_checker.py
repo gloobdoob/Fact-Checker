@@ -5,28 +5,32 @@ import pandas as pd
 pd.set_option('display.max_colwidth', None)
 pd.set_option("display.max_columns", 10)
 
-
+#checks the similarity between text and returns a rating from 0.0 to 1.0 depending on how similar they are
+# uses cosine similarity
 class SimilarityChecker:
     def __init__(self):
         self.comp_model = SentenceTransformer('bert-base-nli-mean-tokens')
 
-    def check_similarity(self, orig_text, comp_list, links=None):
-        orig_text_embeddings = self.comp_model.encode(orig_text)
-        comp_text_embeddings = self.comp_model.encode(comp_list)
+    def check_similarity(self, orig_text, comp_text):
 
-        if isinstance(comp_list, list):
+        orig_text_embeddings = self.comp_model.encode(orig_text)
+        comp_text_embeddings = self.comp_model.encode(comp_text)
+
+        if isinstance(orig_text, str) and isinstance(comp_text, list):
             sim_rating = cosine_similarity(
                 [orig_text_embeddings],
                 comp_text_embeddings
             )
-            sentence_dict = {'Original Text Extracted': orig_text, 'Headlines': comp_list, 'Links': links,
-                             'Similarity Rating': sim_rating[0]}
-            df = pd.DataFrame(sentence_dict)
-            return df
 
+        elif isinstance(orig_text, list) and isinstance(comp_text, list):
+            sim_rating = cosine_similarity(
+                orig_text_embeddings,
+                comp_text_embeddings
+            )
         else:
             sim_rating = cosine_similarity(
                 [orig_text_embeddings],
                 [comp_text_embeddings]
             )
-            return sim_rating[0]
+        #print(sim_rating[0])
+        return sim_rating[0]
