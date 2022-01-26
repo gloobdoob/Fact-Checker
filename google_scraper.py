@@ -63,16 +63,15 @@ class GoogleScraper:
             if not paragraph.is_boilerplate:
                 full_text.append(paragraph.text)
 
-        print("got text body")
+        #print("got text body")
         return ' '.join(full_text)
 
     @timeout(120)
     def _browser_helper(self, r):
         #print('finding link')
         link = r.find('a', href=True)
-        #print('opening link')
+        print('scraping link')
         self.br.open(link['href'])
-        #print("getting google title")
         title = self.br.title()
         body = self._get_site_body(link['href'])
 
@@ -80,7 +79,7 @@ class GoogleScraper:
 
     def get_results(self, query):
 
-        print('scraping')
+        print(f'searching google the first {self.n_searches} results of google')
 
         google_url = f"https://www.google.com/search?q={query.replace(' ', '+')}" + "&num=" + f'{self.n_searches}'
         self.driver.get(google_url)
@@ -105,7 +104,7 @@ class GoogleScraper:
 
             # Next loop if one element is not present
             except Exception as e:
-                print(e)
+                #print(e)
                 continue
 
         return titles_bodies_links

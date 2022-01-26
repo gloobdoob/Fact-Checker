@@ -4,6 +4,10 @@ from text_corrector import TextCorrector
 from similarity_checker import SimilarityChecker
 from google_scraper import GoogleScraper
 from knapsack_checker import KnapsackChecker
+import warnings
+import logging
+
+
 
 class SearchResultException(Exception):
     def __init__(self, *args, **kwargs):
@@ -13,6 +17,7 @@ def check(text, c, gs, sc):
     query = None
     # if the text is not that long, it will not summarize
     if len(text) > 45:
+        print('summarizing text')
         query = c.summarize(text)
 
     else:
@@ -35,19 +40,23 @@ def check(text, c, gs, sc):
         raise SearchResultException()
 
 def main(img):
+
     ocr = ImageReader()
     text = ocr.read_img(img)
     print("extracted:", text)
+    print('correcting text')
 
     c = TextCorrector()
+
+    logger.disabled = True
     corrected = c.correct(text)
     article = c.decide_text(text, corrected)
 
     gs = GoogleScraper()
     sc = SimilarityChecker()
 
-
     t_sim_rating, b_sim_rating, urls = check(article, c, gs, sc)
+    logger.disabled = False
     kc = KnapsackChecker(t_sim_rating, urls)
     res_url_wts, res_sim, full_res_sites = kc.checker()
     print(res_sim)
@@ -56,9 +65,11 @@ def main(img):
     return pred, full_res_sites, urls
 
 if __name__ == "__main__":
+    logger = logging.getLogger()
+    logging.disable(logging.CRITICAL)
     # path for image, this is where you add your image
     # for the dropbox thing
-    img_path = 'news dataset/real/271461659_1115525192528967_385823889246825612_n.jpg'
+    img_path = 'news dataset/real/FB_IMG_1642077414361.jpg'
 
     # u can erase these two lines
     # ------------
@@ -70,16 +81,21 @@ if __name__ == "__main__":
     if prediction == 'Real':
         print('We predict that this is', prediction)
         print('These are the articles from credible sites that we ran across when searching for this image: ')
-        print(sites)
+        for site in sites:
+            print(site)
     elif prediction == 'Risky' and sites:
         print('We predict that this is', prediction + '.', 'Please do more research regarding this topic')
         print('These are the articles from credible sites that we ran across when searching for this image: ')
-        print(sites)
+        for site in sites:
+            print(site)
     elif prediction == 'Risky' and not sites:
         print('We predict that this is a', prediction + ' article.', 'Please do more research regarding this topic')
         print('There were no credible websites that appeared while searching for this image')
         print('These are the risky websites that came up when searching: ')
-        print(urls)
+        for url in urls:
+            print(url)
+
+    print('Please note that this is not perfect and the text corrector/summarizer may get words wrong and these terms will get searched, returning inaccurate results.')
 
 
 

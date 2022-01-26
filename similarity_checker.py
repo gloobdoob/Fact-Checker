@@ -13,8 +13,8 @@ class SimilarityChecker:
 
     def check_similarity(self, orig_text, comp_text):
 
-        orig_text_embeddings = self.comp_model.encode(orig_text)
-        comp_text_embeddings = self.comp_model.encode(comp_text)
+        orig_text_embeddings = self.comp_model.encode(orig_text, show_progress_bar = False)
+        comp_text_embeddings = self.comp_model.encode(comp_text, show_progress_bar = False)
 
         if isinstance(orig_text, str) and isinstance(comp_text, list):
             sim_rating = cosine_similarity(

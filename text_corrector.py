@@ -38,7 +38,7 @@ class TextCorrector:
         article = None
         sim_rating = self.sim_checker.check_similarity(text, corrected)[0]
         status = None
-        if sim_rating > 0.90:
+        if sim_rating > 0.92:
             status = 'Corrected'
             article = corrected
         else:
