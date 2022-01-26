@@ -58,15 +58,15 @@ def main(img):
 if __name__ == "__main__":
     # path for image, this is where you add your image
     # for the dropbox thing
-    path = 'news dataset/fake'
+    img_path = 'news dataset/real/271461659_1115525192528967_385823889246825612_n.jpg'
 
     # u can erase these two lines
     # ------------
-    imgs = os.listdir(path)
-    img = os.path.join(path, imgs[6])
+    # imgs = os.listdir(path)
+    # img = os.path.join(path, imgs[6])
     # -------------
 
-    prediction, sites, urls = main(img)
+    prediction, sites, urls = main(img_path)
     if prediction == 'Real':
         print('We predict that this is', prediction)
         print('These are the articles from credible sites that we ran across when searching for this image: ')
