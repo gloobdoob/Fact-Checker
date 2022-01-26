@@ -95,7 +95,7 @@ if __name__ == "__main__":
         for url in urls:
             print(url)
 
-    print('Please note that this is not perfect and the text corrector/summarizer may get words wrong and these terms will get searched, returning inaccurate results.')
+    print('Please note that this is not perfect, the text corrector/summarizer may get words wrong and these terms will get searched, returning inaccurate results.')
 
 
 
