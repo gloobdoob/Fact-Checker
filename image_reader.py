@@ -19,7 +19,6 @@ class ImageReader:
         img_arr = np.array(img)
         spacer = 100
         font = cv2.FONT_HERSHEY_SIMPLEX
-
         for detection in result:
             top_left = tuple(detection[0][0])
             bottom_right = tuple(detection[0][2])
@@ -27,11 +26,16 @@ class ImageReader:
             img = cv2.rectangle(img_arr ,top_left,bottom_right,(0,255,0),3)
             img = cv2.putText(img_arr ,text,(20,spacer), font, 0.5,(0,255,0),2,cv2.LINE_AA)
             spacer+=15
-
+        #plt.ion()
         plt.imshow(img_arr)
         plt.show()
-
+        #plt.pause(0.001)
+        print('image shown')
         message = [row[1] for row in result]
         message = ' '.join(message)
-
+        print('text extracted')
         return message
+
+
+
+

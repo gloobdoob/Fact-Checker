@@ -9,7 +9,7 @@ pd.set_option("display.max_columns", 10)
 # uses cosine similarity
 class SimilarityChecker:
     def __init__(self):
-        self.comp_model = SentenceTransformer('bert-base-nli-mean-tokens')
+        self.comp_model = SentenceTransformer('bert-base-nli-mean-tokens')#this is outdated, change this when recreating (the bert-base thing i mean)
 
     def check_similarity(self, orig_text, comp_text):
 
